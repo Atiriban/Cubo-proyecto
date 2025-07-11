@@ -1,0 +1,28 @@
+
+Primer ejercicio
+def find_words(words):
+    results = []
+    for word in words:
+        if len(word) > 5:
+            results.append(word)
+    return results
+
+
+lista_de_prueba = ["examen", "IA", "python", "computadora", "codigo", "sol"]
+
+palabras_largas = find_words(lista_de_prueba)
+
+
+print(palabras_largas)
+
+Segundo ejercicos
+
+drinks_sold = 0
+
+for hour in range(1, 5):
+    if hour > 3:
+        drinks_sold = drinks_sold + 1
+
+    drinks_sold = drinks_sold + 2
+
+print(drinks_sold)
