@@ -1,0 +1,75 @@
+def aplicar_descuento(precio, porcentaje_descuento):
+    # Se divide el porcentaje de descuento, como numero entero, entre 100, eso nos da un valor decimal, como 0.2 o 0.3 y eso resta con 1
+    # para asi obtener el valor del descuento y multiplicarlo por el valor del precio
+    return precio * (1 - porcentaje_descuento / 100)
+
+
+def aplicar_iva(precio, porcentaje_iva):
+    # Aqui el paso es igual al anterior, solo con la pequeña diferencia de suma
+    return precio * (1 + porcentaje_iva / 100)
+
+
+def procesar_cesta(cesta, funcion_aplicar):
+    # Iniciamos el contador del precio total en 0
+    precio_total = 0
+
+    print("Procesando cesta de compra:")
+    print("-" * 40)
+
+    # La cesta es un diccionario donde cada producto tiene (precio, porcentaje)
+    for producto, (precio, porcentaje) in cesta.items():
+        precio_procesado = funcion_aplicar(precio, porcentaje)
+        precio_total += precio_procesado
+
+        # Mostramos el resultado de cada producto
+        print(f"{producto}: ${precio:.2f} -> ${precio_procesado:.2f} ({porcentaje}%)")
+
+    print("-" * 40)
+    print(f"Total: ${precio_total:.2f}")
+
+    return precio_total
+
+
+# Programa principal - aquí es donde empieza la ejecución
+if __name__ == "__main__":
+    print("Primera lista aplicando el descuento")
+
+    # Creamos un diccionario con productos y sus precios/descuentos
+    # Cada producto tiene: (precio_original, porcentaje_descuento)
+    cesta_descuentos = {        #Valor del producto, descuento
+        "Laptop": (1000, 10),  # $1000 con 10% descuento
+        "Mouse": (50, 20),
+        "Teclado": (80, 15),
+        "Monitor": (300, 5)
+    }
+
+    # Procesamos la cesta usando la función de descuento
+    total_con_descuentos = procesar_cesta(cesta_descuentos, aplicar_descuento)
+    print(f"\nTotal final con descuentos: ${total_con_descuentos:.2f}")
+
+    print("\n" + "=" * 50)
+
+    print("Aplicando el IVA")
+
+    # Creamos otra cesta, ahora con iva
+    # Cada producto tiene: (precio_original, porcentaje_iva)
+    cesta_iva = {
+        "Libro": (25, 13),  # Primero va el valor, en este caso $25, con 13% de iva que es el valor en el salvador
+        "Comida": (15, 13),
+        "Medicina": (40, 13),
+        "Ropa": (60, 13)
+    }
+
+    # Procesamos la cesta usando la función de IVA
+    total_con_iva = procesar_cesta(cesta_iva, aplicar_iva)
+    print(f"\nTotal final con IVA: ${total_con_iva:.2f}")
+
+    print("\n" + "=" * 50)
+
+
+    print("COMPARACIÓN DIRECTA, con un precio base de $100")
+    precio_base = 100
+
+    print(f"Precio original: ${precio_base}")
+    print(f"Con 15% descuento: ${aplicar_descuento(precio_base, 15):.2f}")
+    print(f"Con 21% IVA: ${aplicar_iva(precio_base, 21):.2f}")
